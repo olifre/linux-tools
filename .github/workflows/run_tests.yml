@@ -1,0 +1,30 @@
+name: "Run tests"
+
+on:
+  push
+
+jobs:
+  test-memlock-tool:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Update apt repos
+      run: |
+        sudo apt-get -y update
+
+    - name: Install basics for compilation
+      run: |
+        sudo apt-get -y install build-essential
+
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Compile memlock tool
+      run: |
+        cd memlock
+        make
+
+    - name: Test memlock tool
+      run: |
+        sudo sh -c "ulimit -l $(( 1024 * 1024 * 300 )) && timeout --signal=INT --preserve-status 10 memlock/memlock $(( 1024 * 1024 * 100 ))"
+
