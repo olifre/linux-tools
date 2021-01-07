@@ -1,3 +1,5 @@
+![Run tests](https://github.com/olifre/linux-tools/workflows/Run%20tests/badge.svg)
+
 # linux-tools
 A random collection of tiny Linux tools.
 
